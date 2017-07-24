@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hzitshop.mapper.TbMenuAppMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.hzitshop.entity.TbMenuApp">
+		<id column="id" property="id" />
+		<result column="appid" property="appid" />
+		<result column="icon" property="icon" />
+		<result column="iconbg" property="iconbg" />
+		<result column="name" property="name" />
+		<result column="url" property="url" />
+		<result column="pId" property="pId" />
+		<result column="permission" property="permission" />
+		<result column="available" property="available" />
+		<result column="checked" property="checked" />
+		<result column="open" property="open" />
+		<result column="iconSkin" property="iconSkin" />
+	</resultMap>
+	<resultMap id="menuAppMap" type="com.hzitshop.vo.menuapp.MenuApp">
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="pname" property="pname" />
+		<result column="url" property="url" />
+		<result column="aiailable" property="aiailable" />
+		<result column="pId" property="pId" />
+	</resultMap>
+	 <!--
+
+	 	SELECT
+	app1.`appid`,app1.`name`,app2.`name` AS pname,app1.`url`,app1.`available`,app1.`pId`
+FROM
+	tb_menu_app app1
+LEFT OUTER JOIN
+	tb_menu_app app2
+ON
+app1.pId=app2.`id`
+	 -->
+	<select id="selectMenuApp" resultMap="menuAppMap">
+	SELECT
+	app1.`id`,app1.`name`,app2.`name` AS pname,app1.`url`,app1.`available`,app1.`pId`
+FROM
+	tb_menu_app app1
+INNER  JOIN
+	tb_menu_app app2
+ON
+app1.pid=app2.id
+	</select>
+</mapper>
